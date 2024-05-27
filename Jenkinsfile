@@ -80,6 +80,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'secret_key', variable: 'SECRET_KEY_VAR'), string(credentialsId: 'access_key', variable: 'ACCESS_KEY_VAR')]){
                     sh '''
+                        ansible-galaxy collection install amazon.aws
                         pip3 install boto3 botocore boto
                         ansible-playbook -i localhost $WORKSPACE/deploy_db_ansible/deploy_ec2_db.yml --extra-vars "access_key=${ACCESS_KEY_VAR} secret_key=${SECRET_KEY_VAR}"
                     '''
