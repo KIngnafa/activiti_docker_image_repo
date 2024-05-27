@@ -59,7 +59,6 @@ pipeline {
         stage('Assume Role in Target Account') {
             steps {
                 script {
-                    sh 'sudo yum install -y awscli'
                     
                     // Assume the role in the target account
                     def assumeRoleCommand = """
