@@ -1,6 +1,6 @@
 ---
   - name: "Delete DB"
-    hosts: localhost
+    hosts: launched
     connection: local
     vars:
       instance_id: wordpressdbclixxjenkins
@@ -9,6 +9,7 @@
     tasks:
      - name: Get instance information based on Name tag
        local_action:
+         module: ec2
          filters:
          "tag:Name": "{{ instance_name }}"
          region: "{{ region }}"
