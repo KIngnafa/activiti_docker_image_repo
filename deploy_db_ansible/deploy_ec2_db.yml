@@ -25,14 +25,7 @@
         group_id: "{{ security_group_id }}"
         region: "{{ region }}"
       register: ec2
-
-    - name: Associate Elastic IP with EC2 instance
-      amazon.aws.ec2_eip:
-        instance_id: "{{ ec2.instances[0].id }}"
-        state: present
-        public_ip: "{{ EIP }}"
-        region: "{{ region }}"
-      when: ec2.changed
+      
     - name: Wait for SSH to be available
       wait_for:
         host: "{{ eip.eip }}"
