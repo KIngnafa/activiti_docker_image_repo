@@ -13,7 +13,8 @@
 
   tasks:
     - name: Start EC2 instance
-      amazon.aws.ec2:
+      local_action: 
+        module: ec2_instance
         key_name: "{{ key_name }}"
         instance_type: "{{ instance_type }}"
         image: "{{ instance_ami }}"
