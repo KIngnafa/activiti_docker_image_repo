@@ -26,6 +26,16 @@
         region: "{{ region }}"
         tags:
           Name: Ansible_EC2
+        register: newinstance
+    - name: associate eip 
+      local_action:
+        module: ec2_eip
+        instance_id: "{{ newinstance.instance_ids[0] }}"
+        region: us-east-1
+        in_vpc : true
+        reuse_existing_ip_allowed: true
+        state: present
+        public_ip: 
     # - name: Wait for SSH to be available
     #   wait_for:
     #     host: "{{ ec2.instances[0].public_ip }}"
