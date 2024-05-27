@@ -25,15 +25,8 @@
         group_id: "{{ security_group_id }}"
         region: "{{ region }}"
       register: ec2
-      
-    - name: Wait for SSH to be available
-      wait_for:
-        host: "{{ eip.eip }}"
-        port: 22
-        delay: 30
-        timeout: 300
-        state: started
 
-    - name: Print instance public IP
+
+    - name: Done
       debug:
-        msg: "The instance public IP is {{ eip.eip }}"
+        msg: "The instance is ready "
