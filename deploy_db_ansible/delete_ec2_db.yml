@@ -5,6 +5,7 @@
     vars:
       instance_id: wordpressdbclixxjenkins
       instance_name : Ansible_EC2
+      region: us-east-1
     tasks:
       - name: remove EC2 DB instance 
         rds_instance:
