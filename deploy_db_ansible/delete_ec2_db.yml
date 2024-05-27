@@ -1,6 +1,6 @@
 ---
   - name: "Delete DB"
-    hosts: launched
+    hosts: localhost
     connection: local
     vars:
       instance_id: wordpressdbclixxjenkins
