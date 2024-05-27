@@ -24,7 +24,6 @@
         # vpc_subnet_id: "{{ subnet_id }}"
         security_group: "{{ security_group_id }}"
         region: "{{ region }}"
-      register: ec2
 
     # - name: Wait for SSH to be available
     #   wait_for:
@@ -34,6 +33,6 @@
     #     timeout: 300
     #     state: started
 
-    - name: Print instance public IP
-      debug:
-        msg: "The instance public IP is {{ ec2.instances[0].public_ip }}"
+    # - name: Print instance public IP
+    #   debug:
+    #     msg: "The instance public IP is {{ ec2.instances[0].public_ip }}"
