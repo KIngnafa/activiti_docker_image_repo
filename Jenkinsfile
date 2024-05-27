@@ -59,8 +59,7 @@ pipeline {
         stage('Assume Role in Target Account') {
             steps {
                 script {
-                    // Install AWS CLI if not already installed
-                    sh 'which aws || sudo apt-get update && sudo apt-get install -y awscli'
+                    sh 'sudo yum install -y awscli'
                     
                     // Assume the role in the target account
                     def assumeRoleCommand = """
