@@ -56,25 +56,25 @@ pipeline {
             }
         }
 
-        stage('Assume Role in Target Account') {
-            steps {
-                script {
+        // stage('Assume Role in Target Account') {
+        //     steps {
+        //         script {
                     
-                    // Assume the role in the target account
-                    def assumeRoleCommand = """
-                        aws sts assume-role \
-                        --role-arn ${TARGET_ACCOUNT_ROLE_ARN} \
-                        --role-session-name ${ASSUME_ROLE_SESSION_NAME} \
-                        --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' \
-                        --output text
-                    """
-                    def creds = sh(script: assumeRoleCommand, returnStdout: true).trim().split()
-                    env.AWS_ACCESS_KEY_ID = creds[0]
-                    env.AWS_SECRET_ACCESS_KEY = creds[1]
-                    env.AWS_SESSION_TOKEN = creds[2]
-                }
-            }
-        }
+        //             // Assume the role in the target account
+        //             def assumeRoleCommand = """
+        //                 aws sts assume-role \
+        //                 --role-arn ${TARGET_ACCOUNT_ROLE_ARN} \
+        //                 --role-session-name ${ASSUME_ROLE_SESSION_NAME} \
+        //                 --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' \
+        //                 --output text
+        //             """
+        //             def creds = sh(script: assumeRoleCommand, returnStdout: true).trim().split()
+        //             env.AWS_ACCESS_KEY_ID = creds[0]
+        //             env.AWS_SECRET_ACCESS_KEY = creds[1]
+        //             env.AWS_SESSION_TOKEN = creds[2]
+        //         }
+        //     }
+        // }
 
         stage ('Restore Activiti EC2 Database') {
             steps {

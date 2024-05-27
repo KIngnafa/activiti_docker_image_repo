@@ -5,11 +5,10 @@
   vars:
     instance_ami: ami-09e617c6742d7ee13  # Replace with your AMI ID
     instance_type: t2.micro
-    key_name: stack_devops_man                  # Replace with your key pair name
-    security_group_id: sg-0b5567963a9165bf1  # Replace with your security group ID
-    subnet_id: subnet-03c512c1320bf2af2 # Replace with your subnet ID
+    key_name: stackdevopsmanaut                  # Replace with your key pair name
+    security_group_id: sg-0fc7e93a93422ffdf  # Replace with your security group ID
+    subnet_id: subnet-05f502f802ae3158d # Replace with your subnet ID
     region: us-east-1                   # Replace with your desired region
-    EIP: 34.203.60.148
 
   tasks:
     - name: Start EC2 instance
