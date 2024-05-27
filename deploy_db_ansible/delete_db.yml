@@ -1,0 +1,14 @@
+---
+  - name: "Delete DB"
+    hosts: localhost
+    connection: local
+    vars:
+      instance_id: wordpressdbclixxjenkins
+    tasks:
+
+      - name: remove a db instance without taking a final snapshot
+        rds_instance:
+            id: "{{ instance_id }}"
+            state: absent
+            skip_final_snapshot: True
+            region: us-east-1

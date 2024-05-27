@@ -1,0 +1,46 @@
+---
+- name: Start an EC2 instance and associate an EIP
+  hosts: localhost
+  gather_facts: no
+  vars:
+    instance_ami: ami-09e617c6742d7ee13  # Replace with your AMI ID
+    instance_type: t2.micro
+    key_name: stack_devops_man                  # Replace with your key pair name
+    security_group_id: sg-0b5567963a9165bf1  # Replace with your security group ID
+    subnet_id: subnet-03c512c1320bf2af2 # Replace with your subnet ID
+    region: us-east-1                   # Replace with your desired region
+    EIP: 34.203.60.148
+
+  tasks:
+    - name: Start EC2 instance
+      amazon.aws.ec2:
+        key_name: "{{ key_name }}"
+        instance_type: "{{ instance_type }}"
+        image: "{{ instance_ami }}"
+        wait: yes
+        count: 1
+        instance_tags:
+          Name: AnsibleLaunchedInstance
+        vpc_subnet_id: "{{ subnet_id }}"
+        group_id: "{{ security_group_id }}"
+        region: "{{ region }}"
+      register: ec2
+
+    - name: Associate Elastic IP with EC2 instance
+      amazon.aws.ec2_eip:
+        instance_id: "{{ ec2.instances[0].id }}"
+        state: present
+        public_ip: "{{ specific_eip }}"
+        region: "{{ region }}"
+      when: ec2.changed
+    - name: Wait for SSH to be available
+      wait_for:
+        host: "{{ eip.eip }}"
+        port: 22
+        delay: 30
+        timeout: 300
+        state: started
+
+    - name: Print instance public IP
+      debug:
+        msg: "The instance public IP is {{ eip.eip }}"
