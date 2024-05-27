@@ -7,13 +7,6 @@
       instance_name : Ansible_EC2
       region: us-east-1
     tasks:
-      - name: remove EC2 DB instance 
-        rds_instance:
-            id: "{{ instance_id }}"
-            state: absent
-            skip_final_snapshot: True
-            region: us-east-1
-
       - name: Get instance information based on Name tag
         ec2:
           filters:
@@ -27,6 +20,6 @@
 
       - name: Terminate instances
         ec2:
-          state: 'absent'
+          state: 'terminate'
           instance_ids: '{{ ec2.instance_ids }}'
         
