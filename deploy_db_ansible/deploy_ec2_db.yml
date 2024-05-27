@@ -2,7 +2,7 @@
 - name: Start an EC2 instance and associate an EIP
   hosts: localhost
   connection: local
-  gather_facts: no
+  become: False
   vars:
     instance_ami: ami-09e617c6742d7ee13  # Replace with your AMI ID
     instance_type: t2.micro
@@ -13,12 +13,14 @@
 
   tasks:
     - name: Start EC2 instance
-      amazon.aws.ec2_instance:
+      local_action:
+        module: ec2_instance
         key_name: "{{ key_name }}"
         instance_type: "{{ instance_type }}"
         image_id: "{{ instance_ami }}"
         wait: yes
-        count: 1
+        # count: 1
+        wait_timeout: 1200
         instance_tags:
           Name: AnsibleLaunchedInstance
         vpc_subnet_id: "{{ subnet_id }}"
