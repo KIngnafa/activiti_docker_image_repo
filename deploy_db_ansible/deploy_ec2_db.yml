@@ -21,8 +21,6 @@
         wait: yes
         # count: 1
         wait_timeout: 1200
-        instance_tags:
-          Name: AnsibleLaunchedInstance
         vpc_subnet_id: "{{ subnet_id }}"
         security_group: "{{ security_group_id }}"
         region: "{{ region }}"
