@@ -87,7 +87,7 @@ pipeline {
                     source python3-virtualenv/bin/activate
                     python3 --version
                     pip3 install boto3 botocore boto
-                    ansible-playbook $WORKSPACE/deploy_db_ansible/delete_db.yml
+                    ansible-playbook $WORKSPACE/deploy_db_ansible/delete_ec2_db.yml
                     deactivate
                     docker stop activiti-cont
                     docker rm activiti-cont
