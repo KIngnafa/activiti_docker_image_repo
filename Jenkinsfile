@@ -5,7 +5,7 @@ pipeline {
         VERSION = "1.0.${BUILD_NUMBER}"
         PATH = "${PATH}:${getSonarPath()}"
         AWS_DEFAULT_REGION = 'us-east-1'
-        ROLE_ARN =  'arn:aws:iam::891377046654:role/Engineer'
+        TARGET_ACCOUNT_ROLE_ARN =  'arn:aws:iam::891377046654:role/Engineer'
         ASSUME_ROLE_SESSION_NAME = 'JenkinsSession'
     }
 
