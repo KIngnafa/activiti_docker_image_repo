@@ -30,7 +30,7 @@
       amazon.aws.ec2_eip:
         instance_id: "{{ ec2.instances[0].id }}"
         state: present
-        public_ip: "{{ specific_eip }}"
+        public_ip: "{{ EIP }}"
         region: "{{ region }}"
       when: ec2.changed
     - name: Wait for SSH to be available
