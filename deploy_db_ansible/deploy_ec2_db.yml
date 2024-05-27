@@ -21,7 +21,7 @@
         wait: yes
         # count: 1
         wait_timeout: 1200
-        vpc_subnet_id: "{{ subnet_id }}"
+        # vpc_subnet_id: "{{ subnet_id }}"
         security_group: "{{ security_group_id }}"
         region: "{{ region }}"
       register: ec2
