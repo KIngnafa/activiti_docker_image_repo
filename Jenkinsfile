@@ -35,13 +35,13 @@ pipeline {
         //     }
         // }
 
-        stage ('Build Docker Image') {
+        stage ('Build Activiti Docker Image') {
             steps {
                 sh "docker build . -t activiti-image:$VERSION "
             }
         }
 
-        stage ('Starting Docker Image') {
+        stage ('Starting Activiti Docker Image') {
             steps {
                 sh '''
                 if ( docker ps|grep activiti-cont ) then
@@ -55,26 +55,6 @@ pipeline {
                 '''
             }
         }
-
-        // stage('Assume Role in Target Account') {
-        //     steps {
-        //         script {
-                    
-        //             // Assume the role in the target account
-        //             def assumeRoleCommand = """
-        //                 aws sts assume-role \
-        //                 --role-arn ${TARGET_ACCOUNT_ROLE_ARN} \
-        //                 --role-session-name ${ASSUME_ROLE_SESSION_NAME} \
-        //                 --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' \
-        //                 --output text
-        //             """
-        //             def creds = sh(script: assumeRoleCommand, returnStdout: true).trim().split()
-        //             env.AWS_ACCESS_KEY_ID = creds[0]
-        //             env.AWS_SECRET_ACCESS_KEY = creds[1]
-        //             env.AWS_SESSION_TOKEN = creds[2]
-        //         }
-        //     }
-        // }
 
         stage ('Restore Activiti EC2 Database') {
             steps {
@@ -90,9 +70,6 @@ pipeline {
         stage ('Configure DB Instance') {
             steps {
                 sh '''
-                    USERNAME='wordpressuser'
-                    PASSWORD='W3lcome123'
-                    DBNAME='wordpressdb'
                     SERVER_IP=$(curl -s http://checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
                     SERVER_INSTANCE='44.211.15.91'
                     docker exec -d activiti-cont sed -i "s/'34.203.60.148'/'${SERVER_INSTANCE}'/g" /usr/local/tomcat/webapps/activiti-app/WEB-INF/classes/META-INF/activiti-app.properties
