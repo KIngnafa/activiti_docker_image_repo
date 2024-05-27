@@ -8,8 +8,7 @@
       region: us-east-1
     tasks:
       - name: Get instance information based on Name tag
-        ec2:
-          filters:
+        amazon.aws.ec2_instance_info:
           "tag:Name": "{{ instance_name }}"
           region: "{{ region }}"
         register: ec2_info
