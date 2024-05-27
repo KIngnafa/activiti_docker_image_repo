@@ -48,9 +48,9 @@ pipeline {
                     echo "Docker image exists, killing it"
                     docker stop activiti-cont
                     docker rm activiti-cont
-                    docker run --name activiti-cont -p 8080:8080 -d activiti-image:$VERSION
+                    docker run --name activiti-cont -p 8081:8080 -d activiti-image:$VERSION
                 else
-                    docker run --name activiti-cont -p 8080:8080 -d activiti-image:$VERSION 
+                    docker run --name activiti-cont -p 8081:8080 -d activiti-image:$VERSION 
                 fi
                 '''
             }
