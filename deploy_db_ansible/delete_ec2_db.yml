@@ -7,19 +7,19 @@
       instance_name : Ansible_EC2
       region: us-east-1
     tasks:
-      - name: Get instance information based on Name tag
-        amazon.aws.ec2_instance_info:
-          filters:
-          "tag:Name": "{{ instance_name }}"
-          region: "{{ region }}"
-        register: ec2_info
+     - name: Get instance information based on Name tag
+       local_action:
+         filters:
+         "tag:Name": "{{ instance_name }}"
+         region: "{{ region }}"
+       register: ec2_info
 
-      - name: Set instance ID fact
-        set_fact:
-          instance_id: "{{ ec2_info.instances[0].instance_id }}"
+     - name: Set instance ID fact
+       set_fact:
+         instance_id: "{{ ec2_info.instances[0].instance_id }}"
 
-      - name: Terminate instances
-        ec2:
-          state: 'terminate'
-          instance_ids: '{{ ec2.instance_ids }}'
+     - name: Terminate instances that were previously launched
+       local_action:
+         state: 'absent'
+         instance_ids: '{{ ec2.instance_ids }}'
         
