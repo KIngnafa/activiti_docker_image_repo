@@ -95,7 +95,7 @@ pipeline {
                     DBNAME='wordpressdb'
                     SERVER_IP=$(curl -s http://checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
                     SERVER_INSTANCE='44.211.15.91'
-                    docker exec -d activiti-cont sed -i "s/'34.203.60.148'/'${SERVER_INSTANCE}'/g" /usr/local/tomcat/webapps/activiti-app/WEB-INF/classes/META-INF/activiti-app
+                    docker exec -d activiti-cont sed -i "s/'34.203.60.148'/'${SERVER_INSTANCE}'/g" /usr/local/tomcat/webapps/activiti-app/WEB-INF/classes/META-INF/activiti-app.properties
                     // echo "use wordpressdb;" >> $WORKSPACE/db.setup
                     // echo "UPDATE wp_options SET option_value = '$SERVER_IP' WHERE option_value LIKE '%NLB%';">> $WORKSPACE/db.setup
                     // mysql -u $USERNAME --password=$PASSWORD -h $SERVER_INSTANCE -D $DBNAME < $WORKSPACE/db.setup
