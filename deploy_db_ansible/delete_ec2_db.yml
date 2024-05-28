@@ -1,27 +1,25 @@
 ---
-  - name: "Delete DB"
-    hosts: localhost
-    connection: local
-    vars:
-      instance_id: wordpressdbclixxjenkins
-      instance_name : Ansible_EC2
-      region: us-east-1
-      ami_id: ami-09e617c6742d7ee13
-    tasks:
-     - name: Get instance information based on Name tag
-       community.aws.ec2:
-         module: ec2
-         filters:
-          "image-id": "{{ ami_id }}"
-         region: "{{ region }}"
-       register: ec2_info
+- name: Terminate an EC2 instance
+  hosts: localhost
+  connection: local
+  vars:
+    instance_name: Ansible_EC2
+  gather_facts: False
+  tasks:
+    - name: Gather EC2 instances information
+      ec2_instance_info:
+       region: us-east-1
+       filters:
+        "tag:Name": "{{ instance_name }}"
+      register: ec2_info
 
-     - name: Collect instance IDs
-       set_fact:
-       instance_ids: "{{ ec2_info.instances | map(attribute='instance_id') | list }}"
+    # - name: Extract instance IDs
+    #    set_fact:
+    #     instance_ids: "{{ ec2_info.instances | (attribute='instance_id') | list }}"
 
-     - name: Terminate
-       community.aws.ec2:
-         state: 'absent'
-         instance_ids: '{{ ec2.instance_ids }}'
-        
+    - name: Terminate EC2 instance
+      ec2_instance:
+       instance_ids: "{{ ec2_info.instances[0].instance_id }}"
+       region: us-east-1 
+       state: absent
+      register: termination
