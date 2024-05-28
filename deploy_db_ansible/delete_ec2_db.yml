@@ -11,6 +11,7 @@
        region: us-east-1
        filters:
         "tag:Name": "{{ instance_name }}"
+        instance-state-name: "running"
       register: ec2_info
 
     # - name: Extract instance IDs
