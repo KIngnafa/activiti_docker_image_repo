@@ -11,13 +11,8 @@
        region: us-east-1
        filters:
         "tag:Name": "{{ instance_name }}"
-        instance-state-name: "running"
+        instance-state-name: "running"  
       register: ec2_info
-
-    # - name: Extract instance IDs
-    #    set_fact:
-    #     instance_ids: "{{ ec2_info.instances | (attribute='instance_id') | list }}"
-
     - name: Terminate EC2 instance
       ec2_instance:
        instance_ids: "{{ ec2_info.instances[0].instance_id }}"
