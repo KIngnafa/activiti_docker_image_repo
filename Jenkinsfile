@@ -37,7 +37,7 @@ pipeline {
 
         stage ('Build Activiti Docker Image') {
             steps {
-                sh "docker build . -t activiti-image:$VERSION "
+                sh "docker build . -t activiti-image:$VERSION"
             }
         }
 
@@ -77,7 +77,7 @@ pipeline {
             }
         }
 
-        stage ('Tear Down CliXX Docker Image and Database') {
+        stage ('Tear Down Activiti Docker Image and Database') {
             steps {
                 script {
                     def userInput = input(id: 'confirm', message: 'Tear Down Environment?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Tear Down Environment?', name: 'confirm'] ])
