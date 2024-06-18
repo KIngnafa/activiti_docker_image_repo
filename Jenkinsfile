@@ -72,7 +72,7 @@ pipeline {
                 sh '''
                     SERVER_IP=$(curl -s http://checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
                     SERVER_INSTANCE='44.211.15.91'
-                    docker exec -d activiti-cont sed -i "s/'34.203.60.148'/'${SERVER_INSTANCE}'/g" /usr/local/tomcat/webapps/activiti-app/WEB-INF/classes/META-INF/activiti-app/activiti-app.properties
+                    docker exec -d activiti-cont sed -i "s/'10.0.20.40'/'${SERVER_INSTANCE}'/g" /usr/local/tomcat/webapps/activiti-app/WEB-INF/classes/META-INF/activiti-app/activiti-app.properties
                 '''
             }
         }
