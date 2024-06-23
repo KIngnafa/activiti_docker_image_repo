@@ -10,30 +10,30 @@ pipeline {
     }
 
     stages {
-        // stage ('Sonarqube Scan') {
-        //     steps {
-        //         script {
-        //             scannerHome = tool 'sonarqube'
-        //         }
-        //         withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]){
-        //             withSonarQubeEnv('SonarQubeScanner') {
-        //                 sh """
-        //                     ${scannerHome}/bin/sonar-scanner \
-        //                     -Dsonar.projectKey=Activiti-app-YinkaR \
-        //                     -Dsonar.login=${SONAR_TOKEN}
-        //                 """
-        //             }
-        //         }
-        //     }
-        // }
+        stage ('Sonarqube Scan') {
+            steps {
+                script {
+                    scannerHome = tool 'sonarqube'
+                }
+                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]){
+                    withSonarQubeEnv('SonarQubeScanner') {
+                        sh """
+                            ${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=Activiti-app-YinkaR \
+                            -Dsonar.login=${SONAR_TOKEN}
+                        """
+                    }
+                }
+            }
+        }
 
-        // stage ('Quality Gate') {
-        //     steps {
-        //         timeout(time: 3, unit: 'MINUTES') {
-        //             waitForQualityGate abortPipeline: true
-        //         }
-        //     }
-        // }
+        stage ('Quality Gate') {
+            steps {
+                timeout(time: 3, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
 
         stage ('Build Activiti Docker Image') {
             steps {
